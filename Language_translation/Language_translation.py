@@ -3,20 +3,16 @@ from tkinter import ttk, messagebox
 from deep_translator import GoogleTranslator
 import pyttsx3
 
-# Initialize text-to-speech engine
 engine = pyttsx3.init()
 
-# Get language list supported by deep-translator
 language_dict = GoogleTranslator(source='auto', target='english').get_supported_languages(as_dict=True)
 language_list = list(language_dict.values())
 
-# Create GUI window
 root = tk.Tk()
 root.title("Language Translation Tool")
 root.geometry("600x400")
 root.resizable(False, False)
 
-# Function to perform translation
 def translate_text():
     try:
         src_lang = source_lang_combo.get().lower()
@@ -33,7 +29,6 @@ def translate_text():
     except Exception as e:
         messagebox.showerror("Error", str(e))
 
-# Text-to-speech
 def speak_text():
     try:
         text = output_text.get("1.0", tk.END).strip()
@@ -45,21 +40,15 @@ def speak_text():
     except Exception as e:
         messagebox.showerror("TTS Error", str(e))
 
-
-# Copy to clipboard
 def copy_text():
     root.clipboard_clear()
     root.clipboard_append(output_text.get("1.0", tk.END).strip())
     messagebox.showinfo("Copied", "Translated text copied to clipboard!")
 
-# --- GUI Layout ---
-
-# Input text label and box
 tk.Label(root, text="Enter text:", font=("Arial", 12)).pack()
 input_text = tk.Text(root, height=5, width=70)
 input_text.pack(pady=5)
 
-# Language selection dropdowns
 lang_frame = tk.Frame(root)
 lang_frame.pack(pady=5)
 
@@ -73,16 +62,13 @@ target_lang_combo = ttk.Combobox(lang_frame, values=language_list, width=25)
 target_lang_combo.set("tamil")
 target_lang_combo.grid(row=0, column=3)
 
-# Translate button
 translate_btn = tk.Button(root, text="Translate", command=translate_text, bg="green", fg="white", font=("Arial", 12))
 translate_btn.pack(pady=10)
 
-# Output text box
 tk.Label(root, text="Translated text:", font=("Arial", 12)).pack()
 output_text = tk.Text(root, height=5, width=70)
 output_text.pack(pady=5)
 
-# Extra options (Speak, Copy)
 opt_frame = tk.Frame(root)
 opt_frame.pack(pady=10)
 
@@ -91,3 +77,4 @@ tk.Button(opt_frame, text="📋 Copy", command=copy_text).grid(row=0, column=1, 
 
 # Run GUI loop
 root.mainloop()
+
