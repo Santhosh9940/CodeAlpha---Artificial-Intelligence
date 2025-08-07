@@ -4,16 +4,13 @@ import json
 import os
 import spacy
 
-# Load spaCy model
 nlp = spacy.load("en_core_web_sm")
 
-# Load FAQ data
 current_dir = os.path.dirname(os.path.abspath(__file__))
 file_path = os.path.join(current_dir, "faq.json")
 
 with open(file_path, "r", encoding="utf-8") as f:
     faq_data = json.load(f)
-# Preprocess questions
 faq_questions = [nlp(faq["question"]) for faq in faq_data]
 
 def get_answer(user_input):
@@ -22,7 +19,6 @@ def get_answer(user_input):
     best_match_index = similarities.index(max(similarities))
     return faq_data[best_match_index]["answer"]
 
-# GUI setup
 def send_message():
     user_input = user_entry.get()
     if not user_input.strip():
@@ -47,3 +43,4 @@ send_button = tk.Button(app, text="Send", command=send_message)
 send_button.pack(padx=(0,10), pady=(0, 10), side=tk.LEFT)
 
 app.mainloop()
+
